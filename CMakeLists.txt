@@ -10,6 +10,7 @@ qt_add_executable(abriCSV
     main.cpp
     mainwindow.cpp
     mainwindow.h
+    .gitignore
 
 
 )

@@ -1,18 +1,10 @@
 # ninja log v6
-43	242	8010193635799392	abriCSV_autogen/timestamp	61c011641ce57d46
-308	3516	8009978831194545	CMakeFiles/abriCSV.dir/mainwindow.cpp.obj	61b7b561057c7856
-816	4354	8010191115671196	CMakeFiles/abriCSV.dir/abriCSV_autogen/mocs_compilation.cpp.obj	bc5f2cbae7b72b71
-43	242	8010193635799392	abriCSV_autogen/mocs_compilation.cpp	61c011641ce57d46
-973	4138	8009977707120652	CMakeFiles/abriCSV.dir/main.cpp.obj	c1174e0c3ccc756d
-4743	5144	8010193682802215	abriCSV.exe	59efed46cdeda5df
-43	242	8010193635799392	C:/Dev/Qt/abriCSV/build/Desktop_Qt_6_10_2_MinGW_64_bit-Debug/abriCSV_autogen/timestamp	61c011641ce57d46
-43	242	8010193635799392	C:/Dev/Qt/abriCSV/build/Desktop_Qt_6_10_2_MinGW_64_bit-Debug/abriCSV_autogen/mocs_compilation.cpp	61c011641ce57d46
-243	4740	8010193637804889	CMakeFiles/abriCSV.dir/csvmodel.cpp.obj	e4c6e351aa1434cb
 68	1309	8021552491047735	abriCSV_autogen/timestamp	61c011641ce57d46
+1325	5345	8021552492999803	CMakeFiles/abriCSV.dir/mainwindow.cpp.obj	61b7b561057c7856
+1312	4945	8021552492883060	CMakeFiles/abriCSV.dir/abriCSV_autogen/mocs_compilation.cpp.obj	bc5f2cbae7b72b71
 68	1309	8021552491047735	abriCSV_autogen/mocs_compilation.cpp	61c011641ce57d46
+1318	4953	8021552492951405	CMakeFiles/abriCSV.dir/main.cpp.obj	c1174e0c3ccc756d
+5346	6154	8021552533224294	abriCSV.exe	6b3058a226247ef9
 68	1309	8021552491047735	C:/Dev/Qt/abriCSV/build/Desktop_Qt_6_10_2_MinGW_64_bit-Debug/abriCSV_autogen/timestamp	61c011641ce57d46
 68	1309	8021552491047735	C:/Dev/Qt/abriCSV/build/Desktop_Qt_6_10_2_MinGW_64_bit-Debug/abriCSV_autogen/mocs_compilation.cpp	61c011641ce57d46
-1312	4945	8021552492883060	CMakeFiles/abriCSV.dir/abriCSV_autogen/mocs_compilation.cpp.obj	bc5f2cbae7b72b71
-1318	4953	8021552492951405	CMakeFiles/abriCSV.dir/main.cpp.obj	c1174e0c3ccc756d
-1325	5345	8021552492999803	CMakeFiles/abriCSV.dir/mainwindow.cpp.obj	61b7b561057c7856
-5346	6154	8021552533224294	abriCSV.exe	6b3058a226247ef9
+243	4740	8010193637804889	CMakeFiles/abriCSV.dir/csvmodel.cpp.obj	e4c6e351aa1434cb
