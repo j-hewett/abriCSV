@@ -1,9 +1,0 @@
-C:/Dev/Qt/abriCSV/build/Desktop_Qt_6_10_2_MinGW_64_bit-Debug/CMakeFiles/abriCSV.dir
-C:/Dev/Qt/abriCSV/build/Desktop_Qt_6_10_2_MinGW_64_bit-Debug/CMakeFiles/edit_cache.dir
-C:/Dev/Qt/abriCSV/build/Desktop_Qt_6_10_2_MinGW_64_bit-Debug/CMakeFiles/rebuild_cache.dir
-C:/Dev/Qt/abriCSV/build/Desktop_Qt_6_10_2_MinGW_64_bit-Debug/CMakeFiles/list_install_components.dir
-C:/Dev/Qt/abriCSV/build/Desktop_Qt_6_10_2_MinGW_64_bit-Debug/CMakeFiles/install.dir
-C:/Dev/Qt/abriCSV/build/Desktop_Qt_6_10_2_MinGW_64_bit-Debug/CMakeFiles/install/local.dir
-C:/Dev/Qt/abriCSV/build/Desktop_Qt_6_10_2_MinGW_64_bit-Debug/CMakeFiles/install/strip.dir
-C:/Dev/Qt/abriCSV/build/Desktop_Qt_6_10_2_MinGW_64_bit-Debug/CMakeFiles/abriCSV_autogen_timestamp_deps.dir
-C:/Dev/Qt/abriCSV/build/Desktop_Qt_6_10_2_MinGW_64_bit-Debug/CMakeFiles/abriCSV_autogen.dir
