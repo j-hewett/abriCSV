@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "csvtablemodel.h"
+
 #include <QMainWindow>
 
 class QSplitter;
@@ -18,5 +20,6 @@ private:
     QSplitter   *m_splitter  = nullptr;
     QTreeWidget *m_fileTree  = nullptr;
     QTableView  *m_tableView = nullptr;
+    CSVTableModel *m_tableModel = nullptr;
 };
 #endif // MAINWINDOW_H
