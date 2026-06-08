@@ -6,8 +6,9 @@
 #include <QMainWindow>
 
 class QSplitter;
-class QTreeWidget;
+class QTreeView;
 class QTableView;
+class QFileSystemModel;
 
 class MainWindow : public QMainWindow
 {
@@ -16,9 +17,12 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
 
+    void setupTreeView(QString path);
+
 private:
     QSplitter   *m_splitter  = nullptr;
-    QTreeWidget *m_fileTree  = nullptr;
+    QTreeView *m_fileSystemView  = nullptr;
+    QFileSystemModel *m_fileSystemModel = nullptr;
     QTableView  *m_tableView = nullptr;
     CSVTableModel *m_tableModel = nullptr;
 };

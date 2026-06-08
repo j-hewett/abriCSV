@@ -21,7 +21,11 @@ public:
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
+    void loadCSV(const QString &filePath);
+
 private:
+    QList<QStringList> m_data;
+    QStringList m_headers;
 };
 
 #endif // CSVTABLEMODEL_H
