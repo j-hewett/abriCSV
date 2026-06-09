@@ -4,6 +4,7 @@
 #include <QTableView>
 #include <QTreeView>
 #include <QFileSystemModel>
+#include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -14,10 +15,12 @@ MainWindow::MainWindow(QWidget *parent)
     int fileViewWidth = 300;
     int tableViewWidth = windowWidth - fileViewWidth;
 
+    // File system view layout
     m_fileSystemView = new QTreeView(this);
     m_fileSystemModel = new QFileSystemModel(this);
-
-    QString path = "C:/";
+    QString path = QFileDialog::getExistingDirectory(this, "Choose a directory");
+    if (path.isEmpty())
+        path = "C:/";
     setupTreeView(path);
 
     m_tableView = new QTableView(this);
