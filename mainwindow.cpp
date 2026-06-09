@@ -4,7 +4,11 @@
 #include <QTableView>
 #include <QTreeView>
 #include <QFileSystemModel>
-#include <QFileDialog>
+#include <QStackedWidget>
+#include <QVBoxLayout>
+#include <QLabel>
+#include <QLineEdit>
+#include <QPushButton>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -16,18 +20,39 @@ MainWindow::MainWindow(QWidget *parent)
     int tableViewWidth = windowWidth - fileViewWidth;
 
     // File system view layout
-    m_fileSystemView = new QTreeView(this);
+    m_fileSystemView = new QTreeView;
     m_fileSystemModel = new QFileSystemModel(this);
-    QString path = QFileDialog::getExistingDirectory(this, "Choose a directory");
-    if (path.isEmpty())
-        path = "C:/";
-    setupTreeView(path);
+    QString path = "C:/";
+
+    // Directory prompt widget
+    auto *dirPromptWidget = new QWidget;
+    auto *dirPromptLayout = new QVBoxLayout(dirPromptWidget);
+    auto *promptLabel = new QLabel("Enter directory path:");
+    auto *promptLineEdit = new QLineEdit;
+    auto *promptButton = new QPushButton("Open");
+    dirPromptLayout->addWidget(promptLabel);
+    dirPromptLayout->addWidget(promptLineEdit);
+    dirPromptLayout->addWidget(promptButton);
+    dirPromptLayout->addStretch();
+
+    // Stacked view
+    auto *fileViewStacked = new QStackedWidget;
+    fileViewStacked->addWidget(dirPromptWidget);
+    fileViewStacked->addWidget(m_fileSystemView);
+
+    connect(promptButton, &QPushButton::clicked,
+            this, [this, fileViewStacked, promptLineEdit]()
+            {
+                QString path = promptLineEdit->text();
+                setupTreeView(path);
+                fileViewStacked->setCurrentIndex(1);
+    });
 
     m_tableView = new QTableView(this);
     m_tableModel = new CSVTableModel(this);
 
     m_splitter = new QSplitter(Qt::Horizontal, this);
-    m_splitter->addWidget(m_fileSystemView);
+    m_splitter->addWidget(fileViewStacked);
     m_splitter->addWidget(m_tableView);
     m_splitter->setSizes({fileViewWidth, tableViewWidth});
 
