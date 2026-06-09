@@ -12,6 +12,7 @@ qt_add_executable(abriCSV
     mainwindow.h
     .gitignore
     csvtablemodel.h csvtablemodel.cpp
+    test.csv
 
 
 

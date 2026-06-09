@@ -50,6 +50,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     m_tableView = new QTableView(this);
     m_tableModel = new CSVTableModel(this);
+    m_tableView->setModel(m_tableModel);
+    m_tableModel->loadCSV("test.csv");
 
     m_splitter = new QSplitter(Qt::Horizontal, this);
     m_splitter->addWidget(fileViewStacked);
@@ -61,10 +63,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::setupTreeView(QString path)
 {
-    m_fileSystemModel = new QFileSystemModel;
     m_fileSystemModel->setRootPath(path);
 
-    m_fileSystemView = new QTreeView;
     m_fileSystemView->setModel(m_fileSystemModel);
     m_fileSystemView->setRootIndex(m_fileSystemModel->index(m_fileSystemModel->rootPath()));
     m_fileSystemView->setContextMenuPolicy(Qt::CustomContextMenu);
