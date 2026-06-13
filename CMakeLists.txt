@@ -13,9 +13,6 @@ qt_add_executable(abriCSV
     .gitignore
     csvtablemodel.h csvtablemodel.cpp
     test.csv
-
-
-
 )
 
 target_link_libraries(abriCSV
