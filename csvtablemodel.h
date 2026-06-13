@@ -2,6 +2,7 @@
 #define CSVTABLEMODEL_H
 
 #include <QAbstractTableModel>
+#include <QFile>
 
 class CSVTableModel : public QAbstractTableModel
 {
@@ -9,6 +10,9 @@ class CSVTableModel : public QAbstractTableModel
 
 public:
     explicit CSVTableModel(QObject *parent = nullptr);
+
+    void loadCSV(const QString &filePath);
+    QStringList parseCSVLine(QString& line);
 
     // Header:
     QVariant headerData(int section, Qt::Orientation orientation,
@@ -20,11 +24,17 @@ public:
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-    void loadCSV(const QString &filePath);
-
 private:
-    QList<QStringList> m_data;
+    qint64 findField(qint64 rowStart, int column, qint64& fieldEnd) const;
+
+
+    QFile m_file;
+    uchar* m_mappedData = nullptr;
+    qint64 m_fileSize = 0;
+    QVector<qint64> m_rowOffsets;
+
     QStringList m_headers;
+
 };
 
 #endif // CSVTABLEMODEL_H

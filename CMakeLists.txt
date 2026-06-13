@@ -10,7 +10,6 @@ qt_add_executable(abriCSV
     main.cpp
     mainwindow.cpp
     mainwindow.h
-    .gitignore
     csvtablemodel.h csvtablemodel.cpp
     test.csv
 )
@@ -20,6 +19,9 @@ target_link_libraries(abriCSV
         Qt::Core
         Qt::Widgets
 )
+
+configure_file(${CMAKE_SOURCE_DIR}/test.csv ${CMAKE_BINARY_DIR}/test.csv COPYONLY)
+
 
 include(GNUInstallDirs)
 
