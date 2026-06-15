@@ -20,9 +20,6 @@ target_link_libraries(abriCSV
         Qt::Widgets
 )
 
-configure_file(${CMAKE_SOURCE_DIR}/test.csv ${CMAKE_BINARY_DIR}/test.csv COPYONLY)
-
-
 include(GNUInstallDirs)
 
 install(TARGETS abriCSV
