@@ -14,10 +14,12 @@ void CSVTableModel::loadCSV(const QString &filePath)
 
     m_file.setFileName(filePath);
     if (!m_file.open(QIODevice::ReadOnly))
+        endResetModel();
         return;
 
     m_mappedData = m_file.map(0, m_file.size());
     if (!m_mappedData)
+        endResetModel();
         return;
 
     m_fileSize = m_file.size();
