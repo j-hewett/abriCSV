@@ -9,23 +9,34 @@ CSVTableModel::CSVTableModel(QObject *parent)
 void CSVTableModel::loadCSV(const QString &filePath)
 {
     beginResetModel();
+    if (m_mappedData) {
+        m_file.unmap(m_mappedData);
+        m_mappedData = nullptr;
+    }
+    m_file.close();
+
     m_rowOffsets.clear();
     m_headers.clear();
+    m_fileSize = 0;
 
     m_file.setFileName(filePath);
+
     if (!m_file.open(QIODevice::ReadOnly))
+    {
         endResetModel();
         return;
+    }
 
     m_mappedData = m_file.map(0, m_file.size());
     if (!m_mappedData)
+    {
         endResetModel();
         return;
+    }
 
     m_fileSize = m_file.size();
 
     bool first = true;
-
     for (qint64 i = 0; i < m_fileSize; i++)
     {
         char c = m_mappedData[i];
