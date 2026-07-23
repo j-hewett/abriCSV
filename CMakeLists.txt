@@ -11,6 +11,7 @@ qt_add_executable(abriCSV
     mainwindow.cpp
     mainwindow.h
     csvtablemodel.h csvtablemodel.cpp
+    csvindex.h csvindex.cpp
 
 )
 
