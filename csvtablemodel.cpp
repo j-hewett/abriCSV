@@ -59,11 +59,13 @@ QStringList CSVTableModel::parseCSVLine(QString& line)
 {
     QStringList fields;
     QString current;
+
+    // don't treat commas inside quotes as separators
+    // this logic strips quotes from content - check if desired behaviour
     bool inQuotes = false;
 
     for (const QChar c : line)
     {
-
         if (c == '"')
         {
             inQuotes = !inQuotes;
