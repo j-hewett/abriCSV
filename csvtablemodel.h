@@ -31,7 +31,7 @@ private:
     QFile m_file;
     uchar* m_mappedData = nullptr;
     qint64 m_fileSize = 0;
-    QVector<qint64> m_rowOffsets;
+    QList<qint64> m_rowOffsets;
 
     QStringList m_headers;
 
