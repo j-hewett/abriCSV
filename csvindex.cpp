@@ -39,3 +39,17 @@ void CSVIndex::clear()
     m_headers.clear();
 }
 
+int CSVIndex::rowCount() const
+{
+    return static_cast<int>(m_rowOffsets.size());
+}
+
+int CSVIndex::columnCount() const
+{
+    return m_headers.size();
+}
+
+const QStringList& CSVIndex::headers() const
+{
+    return m_headers;
+}

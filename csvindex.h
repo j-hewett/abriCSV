@@ -21,10 +21,7 @@ public:
 
     int rowCount() const;
     int columnCount() const;
-    const QStringList& headers() const
-    {
-        return m_headers;
-    }
+    const QStringList& headers() const;
 
     FieldRef fieldAt(int row, int column) const;
 
