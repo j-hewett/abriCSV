@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
     auto *dirPromptWidget = new QWidget;
     auto *dirPromptLayout = new QVBoxLayout(dirPromptWidget);
     auto *promptLabel = new QLabel("Enter directory path:");
-    auto *promptLineEdit = new QLineEdit;
+    auto *promptLineEdit = new QLineEdit("C:/Dev/test/CSV_Files"); //temp
     auto *promptButton = new QPushButton("Open directory");
     auto *openFileDialogButton = new QPushButton("Choose a local directory...");
     dirPromptLayout->addWidget(promptLabel);
@@ -56,7 +56,6 @@ MainWindow::MainWindow(QWidget *parent)
                 }
                 // Directory not valid, inform user
             });
-
     // Open file dialog (explorer)
     connect(openFileDialogButton, &QPushButton::clicked,
             this, [this, fileViewStacked]
