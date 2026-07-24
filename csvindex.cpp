@@ -53,3 +53,73 @@ const QStringList& CSVIndex::headers() const
 {
     return m_headers;
 }
+
+CSVIndex::FieldRef CSVIndex::fieldAt(int row, int column) const
+{
+    if (row < 0 || static_cast<size_t>(row) >= m_rowOffsets.size())
+        return {};
+
+    if (column < 0)
+        return {};
+
+    return findField(m_rowOffsets[row], column);
+}
+
+QStringList CSVIndex::parseLine(const char* data, qint64 lineStart, qint64 lineEnd)
+{
+    QStringList fields;
+    QByteArray current;
+    bool inQuotes = false;
+
+    for (qint64 i = lineStart; i < lineEnd; i++)
+    {
+        char c = data[i];
+
+        if (c == '"')
+        {
+            inQuotes = !inQuotes;
+            continue;
+        }
+        if (c == ',' && !inQuotes)
+        {
+            fields << QString::fromUtf8(current);
+            current.clear();
+            continue;
+        }
+        current += c;
+    }
+    fields << QString::fromUtf8(current);
+
+    return fields;
+}
+
+CSVIndex::FieldRef CSVIndex::findField(qint64 rowStart, int column) const
+{
+    bool inQuotes = false;
+    int separatorCount = 0;
+    qint64 fieldStart = rowStart;
+
+    for (qint64 i = rowStart; i < m_size; i++)
+    {
+        char c = m_data[i];
+
+        if (c == '"')
+        {
+            inQuotes = !inQuotes;
+        }
+        else if ((c == ',' || c == '\n') && !inQuotes)
+        {
+            if (separatorCount == column)
+            {
+                qint64 fieldEnd = i;
+                if (fieldEnd > fieldStart && m_data[fieldEnd - 1] == '\r')
+                    fieldEnd--;
+                return FieldRef{fieldStart, fieldEnd - fieldStart};
+            }
+            fieldStart = i + 1;
+            separatorCount++;
+        }
+    }
+
+    return {};
+}
