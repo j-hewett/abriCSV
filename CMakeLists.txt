@@ -7,11 +7,12 @@ qt_standard_project_setup()
 
 qt_add_executable(abriCSV
     WIN32 MACOSX_BUNDLE
-    main.cpp
-    mainwindow.cpp
-    mainwindow.h
-    csvtablemodel.h csvtablemodel.cpp
-    csvindex.h csvindex.cpp
+    src/main.cpp
+    src/mainwindow.cpp
+    src/mainwindow.h
+    src/csvtablemodel.h src/csvtablemodel.cpp
+    src/csvindex.h src/csvindex.cpp
+    src/mainwindow.ui
 
 )
 
