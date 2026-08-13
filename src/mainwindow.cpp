@@ -29,63 +29,30 @@ MainWindow::MainWindow(QWidget *parent)
     // Directory prompt widget
     auto *dirPromptWidget = new QWidget;
     auto *dirPromptLayout = new QVBoxLayout(dirPromptWidget);
-    auto *promptLabel = new QLabel("Enter directory path:");
-    auto *promptLineEdit = new QLineEdit("C:/Dev/test/CSV_Files"); //temp
-    auto *promptButton = new QPushButton("Open directory");
-    auto *openFileDialogButton = new QPushButton("Choose a local directory...");
+    auto *promptLabel = new QLabel("You haven't opened a folder yet.");
+    auto *openFileDialogButton = new QPushButton("Open folder");
     dirPromptLayout->addWidget(promptLabel);
-    dirPromptLayout->addWidget(promptLineEdit);
-    dirPromptLayout->addWidget(promptButton);
     dirPromptLayout->addWidget(openFileDialogButton);
     dirPromptLayout->addStretch();
 
     // Stacked view
-    auto *fileViewStacked = new QStackedWidget;
-    fileViewStacked->addWidget(dirPromptWidget);
-    fileViewStacked->addWidget(m_fileSystemView);
+    m_fileViewStacked = new QStackedWidget;
+    m_fileViewStacked->addWidget(dirPromptWidget);
+    m_fileViewStacked->addWidget(m_fileSystemView);
 
-    // Open file from line edit
-    connect(promptButton, &QPushButton::clicked,
-            this, [this, fileViewStacked, promptLineEdit]()
-            {
-                QString dir = promptLineEdit->text();
-                QFileInfo dirInfo(dir);
-                if (dirInfo.isDir()){
-                    setupTreeView(dir);
-                    fileViewStacked->setCurrentIndex(1);
-                    return;
-                }
-                // Directory not valid, inform user
-            });
     // Open file dialog (explorer)
     connect(openFileDialogButton, &QPushButton::clicked,
-            this, [this, fileViewStacked]
-            {
-                QFileDialog file_dialog(this);
-
-                QString dir = file_dialog.getExistingDirectory(this, tr("Open file..."),
-                                                               "C:/", QFileDialog::ShowDirsOnly);
-                setupTreeView(dir);
-                fileViewStacked->setCurrentIndex(1);
-            });
+            this, &MainWindow::openFolder);
 
     connect(m_fileSystemView, &QTreeView::clicked,
-            this, [this](const QModelIndex &index)
-            {
-
-                QString filename = m_fileSystemModel->filePath(index);
-                m_tableModel->loadCSV(filename);
-            }
-            );
+            this, &MainWindow::onTreeViewClicked);
 
     m_tableView = new QTableView(this);
     m_tableModel = new CSVTableModel(this);
     m_tableView->setModel(m_tableModel);
 
-
-
     m_splitter = new QSplitter(Qt::Horizontal, this);
-    m_splitter->addWidget(fileViewStacked);
+    m_splitter->addWidget(m_fileViewStacked);
     m_splitter->addWidget(m_tableView);
     m_splitter->setSizes({fileViewWidth, tableViewWidth});
 
@@ -100,8 +67,16 @@ void MainWindow::setupTreeView(QString path)
     m_fileSystemView->setModel(m_fileSystemModel);
     m_fileSystemView->setRootIndex(m_fileSystemModel->index(m_fileSystemModel->rootPath()));
     m_fileSystemView->setContextMenuPolicy(Qt::CustomContextMenu);
+}
 
-    // directory connections
+void MainWindow::teardownTreeView()
+{
+    m_fileSystemView->setRootIndex(QModelIndex());
+    m_fileSystemModel->setRootPath(QString());
+
+    m_tableModel->clear();
+}
+
 void MainWindow::openFolder()
 {
     QString dir = QFileDialog::getExistingDirectory(

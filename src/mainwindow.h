@@ -9,6 +9,7 @@ class QSplitter;
 class QTreeView;
 class QTableView;
 class QFileSystemModel;
+class QStackedWidget;
 
 class MainWindow : public QMainWindow
 {
@@ -16,7 +17,10 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
+private:
     void setupTreeView(QString path);
+    void teardownTreeView();
+
 private slots:
     void openFolder();
     void closeFolder();
@@ -27,6 +31,7 @@ private:
     QSplitter   *m_splitter  = nullptr;
     QTreeView *m_fileSystemView  = nullptr;
     QFileSystemModel *m_fileSystemModel = nullptr;
+    QStackedWidget *m_fileViewStacked = nullptr;
     QTableView  *m_tableView = nullptr;
     CSVTableModel *m_tableModel = nullptr;
 };
