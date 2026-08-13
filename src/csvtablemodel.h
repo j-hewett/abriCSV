@@ -11,24 +11,20 @@ class CSVTableModel : public QAbstractTableModel
 
 public:
     explicit CSVTableModel(QObject *parent = nullptr);
-
     void loadCSV(const QString &filePath);
-
-    QVariant headerData(int section, Qt::Orientation orientation,
-                        int role = Qt::DisplayRole) const override;
+    void clear();
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
 
+    QVariant headerData(int section, Qt::Orientation orientation,
+                        int role = Qt::DisplayRole) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
 private:
-
-
     QFile m_file;
     uchar* m_mappedData = nullptr;
     CSVIndex m_csvIndex;
-
 };
 
 #endif // CSVTABLEMODEL_H
