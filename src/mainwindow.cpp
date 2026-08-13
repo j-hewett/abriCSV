@@ -10,6 +10,7 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QFileDialog>
+#include <QStandardPaths>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -101,4 +102,35 @@ void MainWindow::setupTreeView(QString path)
     m_fileSystemView->setContextMenuPolicy(Qt::CustomContextMenu);
 
     // directory connections
+void MainWindow::openFolder()
+{
+    QString dir = QFileDialog::getExistingDirectory(
+        this,
+        tr("Open Folder"),
+        QStandardPaths::writableLocation(QStandardPaths::HomeLocation),
+        QFileDialog::ShowDirsOnly
+        );
+
+    if (dir.isEmpty())
+        return;
+
+    setupTreeView(dir);
+    m_fileViewStacked->setCurrentIndex(1);
+}
+
+void MainWindow::closeFolder()
+{
+    teardownTreeView();
+    m_fileViewStacked->setCurrentIndex(0);
+}
+
+void MainWindow::openFile(const QString &filename)
+{
+    m_tableModel->loadCSV(filename);
+}
+
+void MainWindow::onTreeViewClicked(const QModelIndex &index)
+{
+    QString filename = m_fileSystemModel->filePath(index);
+    openFile(filename);
 }

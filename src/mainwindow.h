@@ -16,8 +16,12 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
-
     void setupTreeView(QString path);
+private slots:
+    void openFolder();
+    void closeFolder();
+    void openFile(const QString &filename); //open file without opening a folder
+    void onTreeViewClicked(const QModelIndex &index); //wraps openFile
 
 private:
     QSplitter   *m_splitter  = nullptr;
