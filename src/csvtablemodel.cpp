@@ -36,6 +36,19 @@ void CSVTableModel::loadCSV(const QString &filePath)
     endResetModel();
 }
 
+void CSVTableModel::clear()
+{
+    beginResetModel();
+    m_csvIndex.clear();
+    if (m_mappedData) {
+        m_file.unmap(m_mappedData);
+        m_mappedData = nullptr;
+    }
+    if(m_file.isOpen()) { m_file.close(); }
+
+    endResetModel();
+}
+
 int CSVTableModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
