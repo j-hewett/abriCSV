@@ -12,8 +12,6 @@ qt_add_executable(abriCSV
     src/mainwindow.h
     src/csvtablemodel.h src/csvtablemodel.cpp
     src/csvindex.h src/csvindex.cpp
-    src/mainwindow.ui
-
 )
 
 target_link_libraries(abriCSV
