@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 
+#include <QMenuBar>
 #include <QSplitter>
 #include <QTableView>
 #include <QTreeView>
@@ -20,6 +21,8 @@ MainWindow::MainWindow(QWidget *parent)
     resize(windowWidth, windowHeight);
     int fileViewWidth = 300;
     int tableViewWidth = windowWidth - fileViewWidth;
+
+    createMenuBar();
 
     // File system view layout
     m_fileSystemView = new QTreeView;
@@ -59,6 +62,10 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(m_splitter);
 }
 
+void MainWindow::createMenuBar()
+{
+    m_fileMenu = menuBar()->addMenu(tr("&File"));
+}
 
 void MainWindow::setupTreeView(QString path)
 {
@@ -67,6 +74,7 @@ void MainWindow::setupTreeView(QString path)
     m_fileSystemView->setModel(m_fileSystemModel);
     m_fileSystemView->setRootIndex(m_fileSystemModel->index(m_fileSystemModel->rootPath()));
     m_fileSystemView->setContextMenuPolicy(Qt::CustomContextMenu);
+    m_fileSystemView->hideColumn(2);
 }
 
 void MainWindow::teardownTreeView()
