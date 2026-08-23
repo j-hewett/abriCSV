@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 
 #include <QMenuBar>
+#include <QAction>
+#include <QKeySequence>
 #include <QSplitter>
 #include <QTableView>
 #include <QTreeView>
@@ -65,6 +67,11 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::createMenuBar()
 {
     m_fileMenu = menuBar()->addMenu(tr("&File"));
+
+    m_openFolderAction = new QAction(tr("&Open Folder..."), this);
+    m_openFolderAction->setShortcut(QKeySequence::Open); //ctrl-o
+    connect(m_openFolderAction, &QAction::triggered, this, &MainWindow::openFolder);
+    m_fileMenu->addAction(m_openFolderAction);
 }
 
 void MainWindow::setupTreeView(QString path)
