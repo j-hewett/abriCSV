@@ -72,6 +72,11 @@ void MainWindow::createMenuBar()
     m_openFolderAction->setShortcut(QKeySequence::Open); //ctrl-o
     connect(m_openFolderAction, &QAction::triggered, this, &MainWindow::openFolder);
     m_fileMenu->addAction(m_openFolderAction);
+
+    m_closeFolderAction = new QAction(tr("&Close Folder"), this);
+    m_closeFolderAction->setEnabled(false); //nothing open
+    connect(m_closeFolderAction, &QAction::triggered, this, &MainWindow::closeFolder);
+    m_fileMenu->addAction(m_closeFolderAction);
 }
 
 void MainWindow::setupTreeView(QString path)
@@ -106,12 +111,14 @@ void MainWindow::openFolder()
 
     setupTreeView(dir);
     m_fileViewStacked->setCurrentIndex(1);
+    m_closeFolderAction->setEnabled(true);
 }
 
 void MainWindow::closeFolder()
 {
     teardownTreeView();
     m_fileViewStacked->setCurrentIndex(0);
+    m_closeFolderAction->setEnabled(false);
 }
 
 void MainWindow::openFile(const QString &filename)
