@@ -18,6 +18,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
 private:
+    void createMenuBar();
     void setupTreeView(QString path);
     void teardownTreeView();
 
@@ -34,5 +35,10 @@ private:
     QStackedWidget *m_fileViewStacked = nullptr;
     QTableView  *m_tableView = nullptr;
     CSVTableModel *m_tableModel = nullptr;
+
+    QMenu *m_fileMenu = nullptr;
+    QAction *m_openFolderAction = nullptr;
+    QAction *m_closeFolderAction = nullptr;
+    QAction *m_exitAction = nullptr;
 };
 #endif // MAINWINDOW_H
