@@ -153,9 +153,6 @@ void MainWindow::openFile(const QString &filename)
 
 void MainWindow::promptOpenFile()
 {
-    // Todo: some UI indication of which file is open
-    // If a folder isn't open, or the file open doesn't belong to
-    // the open folder, there should be some indication there too
     QString filename = QFileDialog::getOpenFileName(
         this,
         tr("Open CSV File"),
