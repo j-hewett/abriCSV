@@ -10,6 +10,9 @@ class QTreeView;
 class QTableView;
 class QFileSystemModel;
 class QStackedWidget;
+class QMenu;
+class QAction;
+class QLabel;
 
 class MainWindow : public QMainWindow
 {
@@ -26,19 +29,23 @@ private slots:
     void openFolder();
     void closeFolder();
     void openFile(const QString &filename); //open file without opening a folder
-    void onTreeViewClicked(const QModelIndex &index); //wraps openFile
+    void onTreeViewClicked(const QModelIndex &index);
+    void promptOpenFile();
 
 private:
     QSplitter   *m_splitter  = nullptr;
     QTreeView *m_fileSystemView  = nullptr;
     QFileSystemModel *m_fileSystemModel = nullptr;
     QStackedWidget *m_fileViewStacked = nullptr;
+    QLabel *m_filenameHint = nullptr;
     QTableView  *m_tableView = nullptr;
     CSVTableModel *m_tableModel = nullptr;
 
     QMenu *m_fileMenu = nullptr;
     QAction *m_openFolderAction = nullptr;
     QAction *m_closeFolderAction = nullptr;
+    QAction *m_openFileAction = nullptr;
+    QAction *m_closeFileAction = nullptr;
     QAction *m_exitAction = nullptr;
 };
 #endif // MAINWINDOW_H
