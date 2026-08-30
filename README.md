@@ -3,3 +3,5 @@
 We shall wait no more! **abriCSV** is deliberately **read-only**, lazy-loading each file with a memory map so that a single click will open your file almost instantly. Want to check out another file? Just click it in the file tree, and there it is.
 
 Filters and sorting coming soon!
+
+<img width="1497" height="972" alt="image" src="https://github.com/user-attachments/assets/93872f6d-338a-49a4-8a80-bb5ef2bbd551" />
