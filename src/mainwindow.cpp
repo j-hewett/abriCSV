@@ -1,5 +1,8 @@
 #include "mainwindow.h"
 
+#include <QMenuBar>
+#include <QAction>
+#include <QKeySequence>
 #include <QSplitter>
 #include <QTableView>
 #include <QTreeView>
@@ -21,6 +24,13 @@ MainWindow::MainWindow(QWidget *parent)
     int fileViewWidth = 300;
     int tableViewWidth = windowWidth - fileViewWidth;
 
+    createMenuBar();
+
+    // Left panel -----------------------------------
+
+    auto *leftPanelWidget = new QWidget;
+    auto *leftPanelLayout = new QVBoxLayout(leftPanelWidget);
+
     // File system view layout
     m_fileSystemView = new QTreeView;
     m_fileSystemModel = new QFileSystemModel(this);
@@ -31,7 +41,8 @@ MainWindow::MainWindow(QWidget *parent)
     auto *dirPromptLayout = new QVBoxLayout(dirPromptWidget);
     auto *promptLabel = new QLabel("You haven't opened a folder yet.");
     auto *openFileDialogButton = new QPushButton("Open folder");
-    dirPromptLayout->addWidget(promptLabel);
+    dirPromptLayout->addStretch();
+    dirPromptLayout->addWidget(promptLabel, 0, Qt::AlignHCenter);
     dirPromptLayout->addWidget(openFileDialogButton);
     dirPromptLayout->addStretch();
 
@@ -39,6 +50,19 @@ MainWindow::MainWindow(QWidget *parent)
     m_fileViewStacked = new QStackedWidget;
     m_fileViewStacked->addWidget(dirPromptWidget);
     m_fileViewStacked->addWidget(m_fileSystemView);
+
+    // Filename hint
+    m_filenameHint = new QLabel("No file currently open.");
+
+    auto *separator = new QFrame;
+    separator->setFrameShape(QFrame::HLine);
+    separator->setFrameShadow(QFrame::Sunken);
+
+    leftPanelLayout->addWidget(m_fileViewStacked);
+    leftPanelLayout->addWidget(separator);
+    leftPanelLayout->addWidget(m_filenameHint);
+
+    // Connections etc -------------------------------
 
     // Open file dialog (explorer)
     connect(openFileDialogButton, &QPushButton::clicked,
@@ -52,13 +76,31 @@ MainWindow::MainWindow(QWidget *parent)
     m_tableView->setModel(m_tableModel);
 
     m_splitter = new QSplitter(Qt::Horizontal, this);
-    m_splitter->addWidget(m_fileViewStacked);
+    m_splitter->addWidget(leftPanelWidget);
     m_splitter->addWidget(m_tableView);
     m_splitter->setSizes({fileViewWidth, tableViewWidth});
 
     setCentralWidget(m_splitter);
 }
 
+void MainWindow::createMenuBar()
+{
+    m_fileMenu = menuBar()->addMenu(tr("&File"));
+
+    m_openFolderAction = new QAction(tr("&Open folder..."), this);
+    m_openFolderAction->setShortcut(QKeySequence::Open); //ctrl-o
+    connect(m_openFolderAction, &QAction::triggered, this, &MainWindow::openFolder);
+    m_fileMenu->addAction(m_openFolderAction);
+
+    m_closeFolderAction = new QAction(tr("&Close folder"), this);
+    m_closeFolderAction->setEnabled(false); //nothing open
+    connect(m_closeFolderAction, &QAction::triggered, this, &MainWindow::closeFolder);
+    m_fileMenu->addAction(m_closeFolderAction);
+
+    m_openFileAction = new QAction(tr("Open file..."), this);
+    connect(m_openFileAction, &QAction::triggered, this, &MainWindow::promptOpenFile);
+    m_fileMenu->addAction(m_openFileAction);
+}
 
 void MainWindow::setupTreeView(QString path)
 {
@@ -67,6 +109,7 @@ void MainWindow::setupTreeView(QString path)
     m_fileSystemView->setModel(m_fileSystemModel);
     m_fileSystemView->setRootIndex(m_fileSystemModel->index(m_fileSystemModel->rootPath()));
     m_fileSystemView->setContextMenuPolicy(Qt::CustomContextMenu);
+    m_fileSystemView->hideColumn(2);
 }
 
 void MainWindow::teardownTreeView()
@@ -91,17 +134,34 @@ void MainWindow::openFolder()
 
     setupTreeView(dir);
     m_fileViewStacked->setCurrentIndex(1);
+    m_closeFolderAction->setEnabled(true);
 }
 
 void MainWindow::closeFolder()
 {
     teardownTreeView();
     m_fileViewStacked->setCurrentIndex(0);
+    m_closeFolderAction->setEnabled(false);
 }
 
 void MainWindow::openFile(const QString &filename)
 {
     m_tableModel->loadCSV(filename);
+    QFileInfo info(filename);
+    m_filenameHint->setText(info.fileName());
+}
+
+void MainWindow::promptOpenFile()
+{
+    QString filename = QFileDialog::getOpenFileName(
+        this,
+        tr("Open CSV File"),
+        QStandardPaths::writableLocation(QStandardPaths::HomeLocation),
+        tr("CSV Files (*.csv)")
+        );
+    if (filename.isEmpty())
+        return;
+    openFile(filename);
 }
 
 void MainWindow::onTreeViewClicked(const QModelIndex &index)
