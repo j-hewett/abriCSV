@@ -14,10 +14,20 @@ qt_add_executable(abriCSV
     src/dsvindex.h src/dsvindex.cpp
 )
 
+option(USE_SYSTEM_SQLITE "Link against system libsqlite3 instead of vendored amalgamation" OFF)
+
+if(USE_SYSTEM_SQLITE)
+    find_package(SQLite3 REQUIRED)
+    add_library(SQLite::SQLite3 ALIAS SQLite::SQLite3)
+else()
+    add_subdirectory(external/sqlite3)
+endif()
+
 target_link_libraries(abriCSV
-    PRIVATE
-        Qt::Core
-        Qt::Widgets
+PRIVATE
+    Qt::Core
+    Qt::Widgets
+    SQLite::SQLite3
 )
 
 include(GNUInstallDirs)
