@@ -13,6 +13,7 @@ class QStackedWidget;
 class QMenu;
 class QAction;
 class QLabel;
+class QLineEdit;
 
 class MainWindow : public QMainWindow
 {
@@ -41,6 +42,7 @@ private:
     QLabel *m_filenameHint = nullptr;
     QTableView  *m_tableView = nullptr;
     DSVTableModel *m_tableModel = nullptr;
+    QLineEdit *m_sqlLineEdit = nullptr;
 
     QMenu *m_fileMenu = nullptr;
     QAction *m_openFolderAction = nullptr;

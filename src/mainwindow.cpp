@@ -79,7 +79,10 @@ MainWindow::MainWindow(QWidget *parent)
     m_tableModel = new DSVTableModel(this);
     m_tableView->setModel(m_tableModel);
 
+    m_sqlLineEdit = new QLineEdit(this);
+
     rightPanelLayout->addWidget(m_tableView);
+    rightPanelLayout->addWidget(m_sqlLineEdit, 0, Qt::AlignRight);
 
     m_splitter = new QSplitter(Qt::Horizontal, this);
     m_splitter->addWidget(leftPanelWidget);
