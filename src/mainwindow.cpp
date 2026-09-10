@@ -32,6 +32,9 @@ MainWindow::MainWindow(QWidget *parent)
     auto *leftPanelWidget = new QWidget;
     auto *leftPanelLayout = new QVBoxLayout(leftPanelWidget);
 
+    auto *rightPanelWidget = new QWidget;
+    auto *rightPanelLayout = new QVBoxLayout(rightPanelWidget);
+
     // File system view layout
     m_fileSystemView = new QTreeView;
     m_fileSystemModel = new QFileSystemModel(this);
@@ -76,9 +79,11 @@ MainWindow::MainWindow(QWidget *parent)
     m_tableModel = new DSVTableModel(this);
     m_tableView->setModel(m_tableModel);
 
+    rightPanelLayout->addWidget(m_tableView);
+
     m_splitter = new QSplitter(Qt::Horizontal, this);
     m_splitter->addWidget(leftPanelWidget);
-    m_splitter->addWidget(m_tableView);
+    m_splitter->addWidget(rightPanelWidget);
     m_splitter->setSizes({fileViewWidth, tableViewWidth});
 
     setCentralWidget(m_splitter);
