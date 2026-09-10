@@ -11,7 +11,7 @@ class DSVTableModel : public QAbstractTableModel
 
 public:
     explicit DSVTableModel(QObject *parent = nullptr);
-    void loadCSV(const QString &filePath);
+    void loadFile(const QString &filePath);
     void clear();
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
