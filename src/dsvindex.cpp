@@ -12,13 +12,16 @@ void DSVIndex::build(const char* data, qint64 size)
 
     qint64 lineStart = 0;
     bool first = true;
+    bool inQuotes = false;
 
     for (qint64 i = 0; i < m_size; i++)
     {
-        // does not handle '\n' inside quotes
-
         char c = m_data[i];
-        if (c == '\n')
+        if (c == '"')
+        {
+            inQuotes = !inQuotes;
+        }
+        else if (c == '\n' && !inQuotes)
         {
             if (first)
             {
