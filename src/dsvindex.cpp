@@ -46,7 +46,7 @@ int DSVIndex::rowCount() const
 
 int DSVIndex::columnCount() const
 {
-    return m_headers.size();
+    return static_cast<int>(m_headers.size());
 }
 
 const QStringList& DSVIndex::headers() const
@@ -56,10 +56,10 @@ const QStringList& DSVIndex::headers() const
 
 DSVIndex::FieldRef DSVIndex::fieldAt(int row, int column) const
 {
-    if (row < 0 || static_cast<size_t>(row) >= m_rowOffsets.size())
+    if (row < 0 || row >= rowCount())
         return {};
 
-    if (column < 0)
+    if (column < 0 || column >= columnCount())
         return {};
 
     return findField(m_rowOffsets[row], column);
