@@ -14,6 +14,7 @@
 #include <QPushButton>
 #include <QFileDialog>
 #include <QStandardPaths>
+#include <QSettings>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -81,6 +82,14 @@ MainWindow::MainWindow(QWidget *parent)
     m_splitter->setSizes({fileViewWidth, tableViewWidth});
 
     setCentralWidget(m_splitter);
+
+    QSettings settings;
+    const QString lastFolder = settings.value("recent/folder").toString();
+    if (!lastFolder.isEmpty() && QDir(lastFolder).exists()) {
+        setupTreeView(lastFolder);
+        m_fileViewStacked->setCurrentIndex(1);
+        m_closeFolderAction->setEnabled(true);
+    }
 }
 
 void MainWindow::createMenuBar()
@@ -120,17 +129,33 @@ void MainWindow::teardownTreeView()
     m_tableModel->clear();
 }
 
+void MainWindow::onTreeViewClicked(const QModelIndex &index)
+{
+    QString filename = m_fileSystemModel->filePath(index);
+    openFile(filename);
+}
+
+QString MainWindow::lastOpenedDir() const
+{
+    QString saved = QSettings().value("recent/folder").toString();
+    if (!saved.isEmpty() && QDir(saved).exists())
+        return saved;
+    return QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+}
+
 void MainWindow::openFolder()
 {
     QString dir = QFileDialog::getExistingDirectory(
         this,
         tr("Open Folder"),
-        QStandardPaths::writableLocation(QStandardPaths::HomeLocation),
+        lastOpenedDir(),
         QFileDialog::ShowDirsOnly
         );
 
     if (dir.isEmpty())
         return;
+
+    QSettings().setValue("recent/folder", dir);
 
     setupTreeView(dir);
     m_fileViewStacked->setCurrentIndex(1);
@@ -156,16 +181,10 @@ void MainWindow::promptOpenFile()
     QString filename = QFileDialog::getOpenFileName(
         this,
         tr("Open File"),
-        QStandardPaths::writableLocation(QStandardPaths::HomeLocation),
-        tr("CSV Files (*.csv)")
+        lastOpenedDir(),
+        tr("Delimited Files (*.csv *.tsv);;CSV Files (*.csv);;TSV Files (*.tsv)")
         );
     if (filename.isEmpty())
         return;
-    openFile(filename);
-}
-
-void MainWindow::onTreeViewClicked(const QModelIndex &index)
-{
-    QString filename = m_fileSystemModel->filePath(index);
     openFile(filename);
 }

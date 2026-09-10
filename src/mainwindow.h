@@ -24,6 +24,7 @@ private:
     void createMenuBar();
     void setupTreeView(QString path);
     void teardownTreeView();
+    QString lastOpenedDir() const;
 
 private slots:
     void openFolder();
