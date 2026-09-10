@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "csvtablemodel.h"
+#include "dsvtablemodel.h"
 
 #include <QMainWindow>
 
@@ -39,7 +39,7 @@ private:
     QStackedWidget *m_fileViewStacked = nullptr;
     QLabel *m_filenameHint = nullptr;
     QTableView  *m_tableView = nullptr;
-    CSVTableModel *m_tableModel = nullptr;
+    DSVTableModel *m_tableModel = nullptr;
 
     QMenu *m_fileMenu = nullptr;
     QAction *m_openFolderAction = nullptr;
