@@ -155,7 +155,7 @@ void MainWindow::promptOpenFile()
 {
     QString filename = QFileDialog::getOpenFileName(
         this,
-        tr("Open CSV File"),
+        tr("Open File"),
         QStandardPaths::writableLocation(QStandardPaths::HomeLocation),
         tr("CSV Files (*.csv)")
         );
