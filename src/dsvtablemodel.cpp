@@ -1,12 +1,13 @@
 #include "dsvtablemodel.h"
 #include <QFile>
 #include <QTextStream>
+#include <QFileInfo>
 
 DSVTableModel::DSVTableModel(QObject *parent)
     : QAbstractTableModel(parent)
 {}
 
-void DSVTableModel::loadCSV(const QString &filePath)
+void DSVTableModel::loadFile(const QString &filePath)
 {
     beginResetModel();
 
@@ -31,7 +32,13 @@ void DSVTableModel::loadCSV(const QString &filePath)
         return;
     }
 
-    m_dsvIndex.build(reinterpret_cast<const char*>(m_mappedData), m_file.size());
+    QChar delimiter = QLatin1Char(',');
+    if (QFileInfo(filePath).suffix().compare(QStringLiteral("tsv"), Qt::CaseInsensitive) == 0)
+    {
+        delimiter = QLatin1Char('\t');
+    }
+
+    m_dsvIndex.build(reinterpret_cast<const char*>(m_mappedData), m_file.size(), delimiter);
 
     endResetModel();
 }
