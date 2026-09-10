@@ -80,9 +80,15 @@ MainWindow::MainWindow(QWidget *parent)
     m_tableView->setModel(m_tableModel);
 
     m_sqlLineEdit = new QLineEdit(this);
+    m_sqlLineEdit->setPlaceholderText("Query with SQL...");
+    m_sqlLineEdit->setMinimumWidth(150);
+
+    auto *sqlRow = new QHBoxLayout;
+    sqlRow->addStretch(2);
+    sqlRow->addWidget(m_sqlLineEdit, 1);
 
     rightPanelLayout->addWidget(m_tableView);
-    rightPanelLayout->addWidget(m_sqlLineEdit, 0, Qt::AlignRight);
+    rightPanelLayout->addLayout(sqlRow);
 
     m_splitter = new QSplitter(Qt::Horizontal, this);
     m_splitter->addWidget(leftPanelWidget);
