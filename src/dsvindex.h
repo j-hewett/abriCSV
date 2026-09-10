@@ -2,6 +2,7 @@
 #define DSVINDEX_H
 
 #include <QList>
+#include <QChar>
 
 class DSVIndex
 {
@@ -16,7 +17,7 @@ public:
 
     DSVIndex() = default;
 
-    void build(const char* data, qint64 size);
+    void build(const char* data, qint64 size, QChar delim);
     void clear();
 
     int rowCount() const;
@@ -26,13 +27,14 @@ public:
     FieldRef fieldAt(int row, int column) const;
 
 private:
-    static QStringList parseLine(const char* data, qint64 lineStart, qint64 lineEnd);
+    qint64 scanField(qint64 start, qint64 limit, QChar delim) const;
+    QStringList parseLine(const char *data, qint64 lineStart, qint64 lineEnd) const;
     FieldRef findField(qint64 rowStart, int column) const;
 
 private:
     const char* m_data = nullptr;
     qint64 m_size = 0;
-
+    QChar m_delimiter = ',';
     QList<qint64> m_rowOffsets;
     QStringList m_headers;
 };

@@ -1,11 +1,13 @@
 #include "dsvindex.h"
+#include <qtypes.h>
 
-void DSVIndex::build(const char* data, qint64 size)
+void DSVIndex::build(const char* data, qint64 size, QChar delim)
 {
     clear();
 
     m_data = data;
     m_size = size;
+    m_delimiter = delim;
 
     if (!m_data || m_size <= 0)
         return;
@@ -68,61 +70,43 @@ DSVIndex::FieldRef DSVIndex::fieldAt(int row, int column) const
     return findField(m_rowOffsets[row], column);
 }
 
-QStringList DSVIndex::parseLine(const char* data, qint64 lineStart, qint64 lineEnd)
+qint64 DSVIndex::scanField(qint64 start, qint64 limit, QChar delim) const
+{
+    bool inQuotes = false;
+    for (qint64 i = start; i < limit; i++) {
+        const char c = m_data[i];
+        if (c == '"')
+            inQuotes = !inQuotes;
+        else if ((c == delim || c == '\n') && !inQuotes)
+            return i;
+    }
+    return limit;
+}
+
+QStringList DSVIndex::parseLine(const char *data, qint64 lineStart, qint64 lineEnd) const
 {
     QStringList fields;
-    QByteArray current;
-    bool inQuotes = false;
-
-    for (qint64 i = lineStart; i < lineEnd; i++)
-    {
-        char c = data[i];
-
-        if (c == '"')
-        {
-            inQuotes = !inQuotes;
-            continue;
-        }
-        if (c == ',' && !inQuotes)
-        {
-            fields << QString::fromUtf8(current);
-            current.clear();
-            continue;
-        }
-        current += c;
+    qint64 fieldStart = lineStart;
+    while (fieldStart <= lineEnd) {
+        const qint64 sepPos = scanField(fieldStart, lineEnd, m_delimiter);
+        fields << QString::fromUtf8(data + fieldStart, sepPos - fieldStart).remove(QLatin1Char('"'));
+        fieldStart = sepPos + 1;
     }
-    fields << QString::fromUtf8(current);
-
     return fields;
 }
 
 DSVIndex::FieldRef DSVIndex::findField(qint64 rowStart, int column) const
 {
-    bool inQuotes = false;
-    int separatorCount = 0;
     qint64 fieldStart = rowStart;
-
-    for (qint64 i = rowStart; i < m_size; i++)
-    {
-        char c = m_data[i];
-
-        if (c == '"')
-        {
-            inQuotes = !inQuotes;
+    for (int i = 0; i <= column; i++) {
+        const qint64 sepPos = scanField(fieldStart, m_size, m_delimiter);
+        if (i == column) {
+            qint64 fieldEnd = sepPos;
+            if (fieldEnd > fieldStart && m_data[fieldEnd - 1] == '\r')
+                fieldEnd--;
+            return FieldRef{fieldStart, fieldEnd - fieldStart};
         }
-        else if ((c == ',' || c == '\n') && !inQuotes)
-        {
-            if (separatorCount == column)
-            {
-                qint64 fieldEnd = i;
-                if (fieldEnd > fieldStart && m_data[fieldEnd - 1] == '\r')
-                    fieldEnd--;
-                return FieldRef{fieldStart, fieldEnd - fieldStart};
-            }
-            fieldStart = i + 1;
-            separatorCount++;
-        }
+        fieldStart = sepPos + 1;
     }
-
     return {};
 }
