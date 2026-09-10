@@ -1,16 +1,16 @@
-#include "csvtablemodel.h"
+#include "dsvtablemodel.h"
 #include <QFile>
 #include <QTextStream>
 
-CSVTableModel::CSVTableModel(QObject *parent)
+DSVTableModel::DSVTableModel(QObject *parent)
     : QAbstractTableModel(parent)
 {}
 
-void CSVTableModel::loadCSV(const QString &filePath)
+void DSVTableModel::loadCSV(const QString &filePath)
 {
     beginResetModel();
 
-    m_csvIndex.clear();
+    m_dsvIndex.clear();
     if (m_mappedData) {
         m_file.unmap(m_mappedData);
         m_mappedData = nullptr;
@@ -31,15 +31,15 @@ void CSVTableModel::loadCSV(const QString &filePath)
         return;
     }
 
-    m_csvIndex.build(reinterpret_cast<const char*>(m_mappedData), m_file.size());
+    m_dsvIndex.build(reinterpret_cast<const char*>(m_mappedData), m_file.size());
 
     endResetModel();
 }
 
-void CSVTableModel::clear()
+void DSVTableModel::clear()
 {
     beginResetModel();
-    m_csvIndex.clear();
+    m_dsvIndex.clear();
     if (m_mappedData) {
         m_file.unmap(m_mappedData);
         m_mappedData = nullptr;
@@ -49,23 +49,23 @@ void CSVTableModel::clear()
     endResetModel();
 }
 
-int CSVTableModel::rowCount(const QModelIndex &parent) const
+int DSVTableModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
         return 0;
 
-    return m_csvIndex.rowCount();
+    return m_dsvIndex.rowCount();
 }
 
-int CSVTableModel::columnCount(const QModelIndex &parent) const
+int DSVTableModel::columnCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
         return 0;
 
-    return m_csvIndex.columnCount();
+    return m_dsvIndex.columnCount();
 }
 
-QVariant CSVTableModel::headerData(int section, Qt::Orientation orientation,
+QVariant DSVTableModel::headerData(int section, Qt::Orientation orientation,
                                    int role) const
 {
     if (role != Qt::DisplayRole)
@@ -73,7 +73,7 @@ QVariant CSVTableModel::headerData(int section, Qt::Orientation orientation,
 
     if (orientation == Qt::Horizontal)
     {
-        const QStringList &headers = m_csvIndex.headers();
+        const QStringList &headers = m_dsvIndex.headers();
         if (section < headers.size())
             return headers.at(section);
         return {};
@@ -84,7 +84,7 @@ QVariant CSVTableModel::headerData(int section, Qt::Orientation orientation,
     }
 }
 
-QVariant CSVTableModel::data(const QModelIndex &index, int role) const
+QVariant DSVTableModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
         return QVariant();
@@ -92,7 +92,7 @@ QVariant CSVTableModel::data(const QModelIndex &index, int role) const
     if (role != Qt::DisplayRole && role != Qt::EditRole)
         return QVariant();
 
-    CSVIndex::FieldRef ref = m_csvIndex.fieldAt(index.row(), index.column());
+    DSVIndex::FieldRef ref = m_dsvIndex.fieldAt(index.row(), index.column());
     if (!ref.isValid())
         return {};
 

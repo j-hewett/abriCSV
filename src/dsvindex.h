@@ -1,9 +1,9 @@
-#ifndef CSVINDEX_H
-#define CSVINDEX_H
+#ifndef DSVINDEX_H
+#define DSVINDEX_H
 
 #include <QList>
 
-class CSVIndex
+class DSVIndex
 {
 public:
     struct FieldRef
@@ -14,7 +14,7 @@ public:
         bool isValid() const { return start >= 0; }
     };
 
-    CSVIndex() = default;
+    DSVIndex() = default;
 
     void build(const char* data, qint64 size);
     void clear();
@@ -37,4 +37,4 @@ private:
     QStringList m_headers;
 };
 
-#endif // CSVINDEX_H
+#endif // DSVINDEX_H

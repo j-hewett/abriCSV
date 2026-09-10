@@ -1,16 +1,16 @@
-#ifndef CSVTABLEMODEL_H
-#define CSVTABLEMODEL_H
+#ifndef DSVTABLEMODEL_H
+#define DSVTABLEMODEL_H
 
-#include "csvindex.h"
+#include "dsvindex.h"
 #include <QAbstractTableModel>
 #include <QFile>
 
-class CSVTableModel : public QAbstractTableModel
+class DSVTableModel : public QAbstractTableModel
 {
     Q_OBJECT
 
 public:
-    explicit CSVTableModel(QObject *parent = nullptr);
+    explicit DSVTableModel(QObject *parent = nullptr);
     void loadCSV(const QString &filePath);
     void clear();
 
@@ -24,7 +24,7 @@ public:
 private:
     QFile m_file;
     uchar* m_mappedData = nullptr;
-    CSVIndex m_csvIndex;
+    DSVIndex m_dsvIndex;
 };
 
-#endif // CSVTABLEMODEL_H
+#endif // DSVTABLEMODEL_H

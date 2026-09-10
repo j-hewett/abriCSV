@@ -72,7 +72,7 @@ MainWindow::MainWindow(QWidget *parent)
             this, &MainWindow::onTreeViewClicked);
 
     m_tableView = new QTableView(this);
-    m_tableModel = new CSVTableModel(this);
+    m_tableModel = new DSVTableModel(this);
     m_tableView->setModel(m_tableModel);
 
     m_splitter = new QSplitter(Qt::Horizontal, this);

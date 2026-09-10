@@ -1,6 +1,6 @@
-#include "csvindex.h"
+#include "dsvindex.h"
 
-void CSVIndex::build(const char* data, qint64 size)
+void DSVIndex::build(const char* data, qint64 size)
 {
     clear();
 
@@ -31,7 +31,7 @@ void CSVIndex::build(const char* data, qint64 size)
     }
 }
 
-void CSVIndex::clear()
+void DSVIndex::clear()
 {
     m_data = nullptr;
     m_size = 0;
@@ -39,22 +39,22 @@ void CSVIndex::clear()
     m_headers.clear();
 }
 
-int CSVIndex::rowCount() const
+int DSVIndex::rowCount() const
 {
     return static_cast<int>(m_rowOffsets.size());
 }
 
-int CSVIndex::columnCount() const
+int DSVIndex::columnCount() const
 {
     return m_headers.size();
 }
 
-const QStringList& CSVIndex::headers() const
+const QStringList& DSVIndex::headers() const
 {
     return m_headers;
 }
 
-CSVIndex::FieldRef CSVIndex::fieldAt(int row, int column) const
+DSVIndex::FieldRef DSVIndex::fieldAt(int row, int column) const
 {
     if (row < 0 || static_cast<size_t>(row) >= m_rowOffsets.size())
         return {};
@@ -65,7 +65,7 @@ CSVIndex::FieldRef CSVIndex::fieldAt(int row, int column) const
     return findField(m_rowOffsets[row], column);
 }
 
-QStringList CSVIndex::parseLine(const char* data, qint64 lineStart, qint64 lineEnd)
+QStringList DSVIndex::parseLine(const char* data, qint64 lineStart, qint64 lineEnd)
 {
     QStringList fields;
     QByteArray current;
@@ -93,7 +93,7 @@ QStringList CSVIndex::parseLine(const char* data, qint64 lineStart, qint64 lineE
     return fields;
 }
 
-CSVIndex::FieldRef CSVIndex::findField(qint64 rowStart, int column) const
+DSVIndex::FieldRef DSVIndex::findField(qint64 rowStart, int column) const
 {
     bool inQuotes = false;
     int separatorCount = 0;
