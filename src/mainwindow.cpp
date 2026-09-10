@@ -146,7 +146,7 @@ void MainWindow::closeFolder()
 
 void MainWindow::openFile(const QString &filename)
 {
-    m_tableModel->loadCSV(filename);
+    m_tableModel->loadFile(filename);
     QFileInfo info(filename);
     m_filenameHint->setText(info.fileName());
 }
