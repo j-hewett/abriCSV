@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  QT_VERSION: "6.8.3"
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    name: Build (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{ env.QT_VERSION }}
+          modules: ''
+          cache: true
+
+      - name: Configure CMake
+        run: cmake -B build -S . -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
+
+      - name: Build
+        run: cmake --build build --config ${{ env.BUILD_TYPE }} --parallel
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: abriCSV-${{ matrix.os }}
+          path: |
+            build/**/abriCSV
+            build/**/abriCSV.exe
+            build/**/abriCSV.app
+          if-no-files-found: warn
