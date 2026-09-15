@@ -1,10 +1,11 @@
 QWidget {
     font-family: "Liberation Sans";
     font-weight: 300;
+    color: #000000;
 }
 
 QMainWindow, QDialog {
-    background-color: #dbddcf;
+    background-color: #dadcce;
     color: #000000;
 }
 
@@ -15,12 +16,15 @@ QMenuBar {
     border-color: #261201;
 }
 
+/*----------------------------------------------*/
+
+QWidget#leftPanelWidget {
+
+}
 
 QTreeView, QTableView {
-    background-color: #dbddcf;
+    background-color: #dadcce;
     color: #000000;
-    border: 1px solid #261201;
-    border-radius: 2px;
     gridline-color: #261201;
 }
 
@@ -28,17 +32,43 @@ QTableView {
     font-family: 'Cascadia Mono';
 }
 
-QHeaderView::section {
-    background-color: #dbddcf;
-    color: #000000;
+QTableView QTableCornerButton::section {
+    background: #cdd0c0;
     border: none;
-    border-bottom: 1px solid #261201;
-    padding: 4px;
 }
 
-QLabel {
+QTableView QHeaderView {
+    font-family: 'Cascadia Mono';
+}
+
+QTreeView QHeaderView {
+    font-weight: 800;
+}
+
+QHeaderView::section {
+    background-color: #dadcce;
     color: #000000;
-    background: transparent;
+    border: 1px solid #261201;
+}
+
+QTableView QHeaderView::section {
+    background-color: #cdd0c0;
+}
+
+QTreeView QHeaderView::section {
+    background-color: #cdd0c0;
+
+}
+
+/*-----------------------------------------------*/
+
+QSplitter::handle:horizontal {
+    background-color: #261201;
+    width: 1px;
+}
+
+QSplitter::handle:vertical {
+    height: 2px;
 }
 
 /* Horizontal Line Separator */

@@ -6,6 +6,7 @@
 #include <QSplitter>
 #include <QTableView>
 #include <QTreeView>
+#include <QHeaderView>
 #include <QFileSystemModel>
 #include <QStackedWidget>
 #include <QVBoxLayout>
@@ -15,6 +16,7 @@
 #include <QFileDialog>
 #include <QStandardPaths>
 #include <QSettings>
+#include <QTimer>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -31,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     auto *leftPanelWidget = new QWidget;
     auto *leftPanelLayout = new QVBoxLayout(leftPanelWidget);
+    leftPanelWidget->setObjectName("leftPanelWidget");
 
     // File system view layout
     m_fileSystemView = new QTreeView;
@@ -119,6 +122,7 @@ void MainWindow::setupTreeView(QString path)
     m_fileSystemView->setRootIndex(m_fileSystemModel->index(m_fileSystemModel->rootPath()));
     m_fileSystemView->setContextMenuPolicy(Qt::CustomContextMenu);
     m_fileSystemView->hideColumn(2);
+    m_fileSystemView->hideColumn(3);
 }
 
 void MainWindow::teardownTreeView()
