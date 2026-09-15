@@ -1,18 +1,21 @@
 cmake_minimum_required(VERSION 3.19)
 project(abriCSV LANGUAGES CXX)
+set(CMAKE_AUTORCC ON)
 
 find_package(Qt6 6.9 REQUIRED COMPONENTS Core Widgets)
 
 qt_standard_project_setup()
 
-qt_add_executable(abriCSV
-    WIN32 MACOSX_BUNDLE
+set(sources
     src/main.cpp
     src/mainwindow.cpp
     src/mainwindow.h
     src/dsvtablemodel.h src/dsvtablemodel.cpp
     src/dsvindex.h src/dsvindex.cpp
+    resources/res.qrc
 )
+
+qt_add_executable(abriCSV ${sources})
 
 target_link_libraries(abriCSV
     PRIVATE
