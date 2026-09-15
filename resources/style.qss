@@ -1,0 +1,49 @@
+QWidget {
+    font-family: "Liberation Sans";
+    font-weight: 300;
+}
+
+QMainWindow, QDialog {
+    background-color: #dbddcf;
+    color: #000000;
+}
+
+QMenuBar {
+    color: #000000;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #261201;
+}
+
+
+QTreeView, QTableView {
+    background-color: #dbddcf;
+    color: #000000;
+    border: 1px solid #261201;
+    border-radius: 2px;
+    gridline-color: #261201;
+}
+
+QTableView {
+    font-family: 'Cascadia Mono';
+}
+
+QHeaderView::section {
+    background-color: #dbddcf;
+    color: #000000;
+    border: none;
+    border-bottom: 1px solid #261201;
+    padding: 4px;
+}
+
+QLabel {
+    color: #000000;
+    background: transparent;
+}
+
+/* Horizontal Line Separator */
+QFrame[frameShape="HLine"] {
+    background-color: #261201;
+    border: none;
+    max-height: 1px;
+}
