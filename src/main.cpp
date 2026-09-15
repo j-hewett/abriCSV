@@ -17,13 +17,6 @@ int main(int argc, char *argv[])
         qWarning() << "Failed to open stylesheet:" << styleFile.errorString();
     }
 
-    QStringList fonts = QFontDatabase::families(QFontDatabase::Latin);
-
-    for (auto font : fonts)
-    {
-        qDebug() << font;
-    }
-
     MainWindow w;
     w.show();
     return a.exec();
