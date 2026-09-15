@@ -98,6 +98,9 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::createMenuBar()
 {
     m_fileMenu = menuBar()->addMenu(tr("&File"));
+    m_editMenu = menuBar()->addMenu(tr("&Edit"));
+    m_viewMenu = menuBar()->addMenu(tr("&View"));
+    m_helpMenu = menuBar()->addMenu(tr("&Help"));
 
     m_openFolderAction = new QAction(tr("&Open folder..."), this);
     m_openFolderAction->setShortcut(QKeySequence::Open); //ctrl-o

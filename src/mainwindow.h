@@ -48,5 +48,8 @@ private:
     QAction *m_openFileAction = nullptr;
     QAction *m_closeFileAction = nullptr;
     QAction *m_exitAction = nullptr;
+    QMenu *m_editMenu = nullptr;
+    QMenu *m_viewMenu = nullptr;
+    QMenu *m_helpMenu = nullptr;
 };
 #endif // MAINWINDOW_H

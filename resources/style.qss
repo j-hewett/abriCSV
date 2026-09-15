@@ -1,6 +1,6 @@
 QWidget {
-    font-family: "Liberation Sans";
-    font-weight: 300;
+    font-family: "Arial";
+    font-weight: 400;
     color: #000000;
 }
 
@@ -11,9 +11,19 @@ QMainWindow, QDialog {
 
 QMenuBar {
     color: #000000;
+    font-weight: 600;
     border-width: 1px;
     border-style: solid;
     border-color: #261201;
+}
+
+QMenu {
+    background: #dadcce;
+    border: 1px solid black;
+}
+
+QMenu::item:selected {
+    background-color: #cdd0c0;
 }
 
 /*----------------------------------------------*/
