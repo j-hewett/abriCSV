@@ -17,6 +17,9 @@ int main(int argc, char *argv[])
         qWarning() << "Failed to open stylesheet:" << styleFile.errorString();
     }
 
+    QFontDatabase::addApplicationFont(":/fonts/JetBrainsMono-VariableFont_wght.ttf");
+    QFontDatabase::addApplicationFont(":/fonts/WorkSans-VariableFont_wght.ttf");
+
     MainWindow w;
     w.show();
     return a.exec();

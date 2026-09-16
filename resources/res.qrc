@@ -2,4 +2,8 @@
     <qresource prefix="/">
         <file>style.qss</file>
     </qresource>
+    <qresource prefix="/">
+        <file>fonts/JetBrainsMono-VariableFont_wght.ttf</file>
+        <file>fonts/WorkSans-VariableFont_wght.ttf</file>
+    </qresource>
 </RCC>
