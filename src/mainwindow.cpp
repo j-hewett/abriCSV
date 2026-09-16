@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "centredheaderproxymodel.h"
 
 #include <QMenuBar>
 #include <QAction>
@@ -24,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
     int windowWidth = 1200;
     int windowHeight = 750;
     resize(windowWidth, windowHeight);
-    int fileViewWidth = 300;
+    int fileViewWidth = 200;
     int tableViewWidth = windowWidth - fileViewWidth;
 
     createMenuBar();
@@ -78,6 +79,8 @@ MainWindow::MainWindow(QWidget *parent)
     m_tableView = new QTableView(this);
     m_tableModel = new DSVTableModel(this);
     m_tableView->setModel(m_tableModel);
+    m_tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignCenter);
+    m_tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     m_splitter = new QSplitter(Qt::Horizontal, this);
     m_splitter->addWidget(leftPanelWidget);
@@ -121,11 +124,17 @@ void MainWindow::setupTreeView(QString path)
 {
     m_fileSystemModel->setRootPath(path);
 
-    m_fileSystemView->setModel(m_fileSystemModel);
-    m_fileSystemView->setRootIndex(m_fileSystemModel->index(m_fileSystemModel->rootPath()));
+    auto *proxy = new CentredHeaderProxyModel(this);
+    proxy->setSourceModel(m_fileSystemModel);
+
+    m_fileSystemView->setModel(proxy);
+    m_fileSystemView->setRootIndex(proxy->mapFromSource(
+        m_fileSystemModel->index(m_fileSystemModel->rootPath())));
     m_fileSystemView->setContextMenuPolicy(Qt::CustomContextMenu);
     m_fileSystemView->hideColumn(2);
     m_fileSystemView->hideColumn(3);
+    m_fileSystemView->header()->setDefaultAlignment(Qt::AlignCenter);
+    m_fileSystemView->setIndentation(0);
 }
 
 void MainWindow::teardownTreeView()
