@@ -12,6 +12,7 @@ set(sources
     src/mainwindow.h
     src/dsvtablemodel.h src/dsvtablemodel.cpp
     src/dsvindex.h src/dsvindex.cpp
+    src/util/centredheaderproxymodel.h
     resources/res.qrc
 )
 

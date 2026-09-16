@@ -1,5 +1,5 @@
 QWidget {
-    font-family: "JetBrains Mono";
+    font-family: "Work Sans Medium";
     font-weight: 400;
     color: #000000;
 }
@@ -42,16 +42,18 @@ QTableView {
 }
 
 QTableView QTableCornerButton::section {
-    background: #8A8A87;
+    background: #F0EDE5;
     border: none;
 }
 
 QTableView QHeaderView {
     font-family: 'Cascadia Mono';
+    background-color: #F0EDE5;
 }
 
 QTreeView QHeaderView {
-    font-family: 'Work Sans Medium"
+    font-family: 'Work Sans Medium';
+    background-color: #F0EDE5;
 }
 
 QHeaderView::section {
