@@ -1,5 +1,6 @@
 #include "mainwindow.h"
-#include "centredheaderproxymodel.h"
+#include "util/centredheaderproxymodel.h"
+#include "util/columnfitter.h"
 
 #include <QMenuBar>
 #include <QAction>
@@ -80,7 +81,8 @@ MainWindow::MainWindow(QWidget *parent)
     m_tableModel = new DSVTableModel(this);
     m_tableView->setModel(m_tableModel);
     m_tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignCenter);
-    m_tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+    new ColumnFitter(m_tableView);   // parented to the view, cleans itself up
 
     m_splitter = new QSplitter(Qt::Horizontal, this);
     m_splitter->addWidget(leftPanelWidget);
