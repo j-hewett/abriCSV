@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QTableView>
 #include <QHeaderView>
-#include <QScrollBar>
 #include <QAbstractItemModel>
 #include <QResizeEvent>
 #include <QTimer>
