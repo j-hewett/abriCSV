@@ -13,10 +13,12 @@ set(sources
     src/dsvtablemodel.h src/dsvtablemodel.cpp
     src/dsvindex.h src/dsvindex.cpp
     src/util/centredheaderproxymodel.h
+    src/util/columnfitter.h
     resources/res.qrc
 )
 
-qt_add_executable(abriCSV ${sources})
+qt_add_executable(abriCSV ${sources}
+)
 
 target_link_libraries(abriCSV
     PRIVATE
